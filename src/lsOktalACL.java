@@ -84,11 +84,14 @@ public class lsOktalACL {
 
   private static String transformLine(String inputString) {
 
-    String aclIn = inputString.replaceAll("([dl-])([r-])([w-])([xsS-])([r-])([w-])([xsS-])([r-])([w-])([x-]).+", "$1_$2$3$4_$5$6$7_$8$9$10");
+    String aclIn = inputString.replaceAll("([dl-])([r-])([w-])([xsS-])([r-])([w-])([xsS-])([r-])([w-])([xtT-]).+", "$1_$2$3$4_$5$6$7_$8$9$10");
 
     String acl = parse(aclIn);
 
-    return inputString.replaceAll("([dl-])([r-])([w-])([xsS-])([r-])([w-])([xsS-])([r-])([w-])([x-])", acl);
+    if (acl != null)
+      return inputString.replaceAll("([dl-])([r-])([w-])([xsS-])([r-])([w-])([xsS-])([r-])([w-])([xtT-])", acl);
+    else
+      return inputString;
   }
 
   private static String parse(String aclIn) {
@@ -98,6 +101,13 @@ public class lsOktalACL {
     si = 4;
 
     String[] acl = aclIn.split("_");
+
+    if(acl.length != 4) {
+      System.out.println("Error: " + aclIn);
+      return null;
+    }
+
+    boolean stickyBit = acl[3].matches("..[tT]");
 
     boolean checkDir = true;
     for (String x : acl) {
@@ -122,6 +132,10 @@ public class lsOktalACL {
       nextRound();
     }
 
+    if(stickyBit) {
+      s += 1;
+    }
+
     if (s > 0)
       out = out.substring(0, 2) + s + out.substring(2);
 
@@ -136,6 +150,10 @@ public class lsOktalACL {
         return 2;
       case 'x':
         return 1;
+      case 't':
+        return 1;
+      case 'T':
+        return 0;
       case 's':
         // S +x
         setS();
@@ -166,6 +184,8 @@ public class lsOktalACL {
             "lrw-r-xr-x 1 root root 354 Dez 22 18:26 script.sh",
             "drw-r----- 1 root root 354 Dez 22 18:26 script.sh",
 
+            "drw-r----T 1 root root 354 Dez 22 18:26 script.sh",
+
             "drwSr-Sr-x 1 root root 354 Dez 22 18:26 script.sh",
             "drwsr----- 1 root root 354 Dez 22 18:26 script.sh",
             "drw-r-S--- 1 root root 354 Dez 22 18:26 script.sh",
@@ -179,6 +199,8 @@ public class lsOktalACL {
             "f 755 1 root root 354 Dez 22 18:26 script.sh",
             "l 655 1 root root 354 Dez 22 18:26 script.sh",
             "d 640 1 root root 354 Dez 22 18:26 script.sh",
+
+            "d 1640 1 root root 354 Dez 22 18:26 script.sh",
 
             "d 6645 1 root root 354 Dez 22 18:26 script.sh",
             "d 4740 1 root root 354 Dez 22 18:26 script.sh",
@@ -203,3 +225,4 @@ public class lsOktalACL {
     return result;
   }
 }
+
