@@ -23,7 +23,7 @@ drwxrwxr-x 2 user user 4096 Jan  6 19:54 onServer
 to
 
 ```
-ls -l|java lsOktalACL 
+ls -l | java lsOktalACL 
 insgesamt 28
 f 664 1 user user 4236 Jan  6 19:54 Indexer.class
 f 664 1 user user 5600 Jan  6 21:09 lsOktalACL.class
@@ -32,7 +32,7 @@ d 775 2 user user 4096 Jan  6 19:54 onServer
 f 4764 1 user user  122 Jan  6 19:54 Regex_Tester.txt
 ```
 
-f = file
-d = dir
-s = SUID-Bit (Set User ID) with "x": 6.xxx / 4xxx
-S = SUID-Bit (Set User ID) without "x": 6.xxx / 4xxx
+f = file  
+d = dir  
+s = SUID-Bit (Set User ID) with "x": 6.xxx / 4xxx  
+S = SUID-Bit (Set User ID) without "x": 6.xxx / 4xxx  
