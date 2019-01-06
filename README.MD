@@ -36,3 +36,5 @@ f = file
 d = dir  
 s = SUID-Bit (Set User ID) with "x": 6.xxx / 4xxx  
 S = SUID-Bit (Set User ID) without "x": 6.xxx / 4xxx  
+t = Sticky-Bit with "x"
+T = Sticky-Bit without "x"
